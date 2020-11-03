@@ -1,0 +1,25 @@
+// John Burk Merryman
+// 126008357
+/**
+ * Adds or Subtracts two 4-bit values.
+ * You may have to implement some chips or additional logic to get all of the pieces you need
+ */
+
+CHIP AddSub {
+    IN a[4], b[4], sel; //select bit controls the operation. 0: addition 1: subtraction
+    OUT out[4],c;		//c as carry out
+
+    PARTS:
+	Xor(a=b[0],b=sel,out=c1);
+	Xor(a=b[1],b=sel,out=c2);
+	Xor(a=b[2],b=sel,out=c3);
+	Xor(a=b[3],b=sel,out=c4);
+	
+	FullAdder(a=a[0],b=c1,c=sel,sum=o1,carry=c5);
+	FullAdder(a=a[1],b=c2,c=c5,sum=o2,carry=c6);
+	FullAdder(a=a[2],b=c3,c=c6,sum=o3,carry=c7);
+	FullAdder(a=a[3],b=c4,c=c7,sum=o4,carry=c8);
+	
+	Xor(a=c8,b=c7,out=xo,out=c);
+	Mux16(a[0]=o1,a[1]=o2,a[2]=o3,a[3]=o4,b[0..3]=false,sel=xo,out[0..3]=out);
+}

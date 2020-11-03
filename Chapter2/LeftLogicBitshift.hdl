@@ -1,0 +1,20 @@
+// John Burk Merryman
+// 126008357
+
+//LeftLogicBitshift.hdl
+
+/**
+ * Shift x left by y bits, new bits are filled in with 0
+ * You may assume the maximum shift is 8 bits (in other words, y is in the binary range 0000000000000000 to 0000000000001000)
+ */
+
+CHIP LeftLogicBitshift {
+    IN x[16], y[4];
+    OUT out[16];
+
+    PARTS:
+	Mux16(a=x,b[0]=false, b[1..15]=x[0..14], sel=y[0], out=o-mux-full-1, out[0..13]=o-mux1-p);
+	Mux16(a=o-mux-full-1, b[0..1]=false, b[2..15]=o-mux1-p, sel=y[1], out=o-mux-full-2, out[0..11]=o-mux2-p);
+	Mux16(a=o-mux-full-2,b[0..3]=false,b[4..15]=o-mux2-p,sel=y[2],out=o-mux-full-3);
+	Mux16(a=o-mux-full-3,b[0..7]=false,b[8..15]=x[0..7],sel=y[3],out=out);
+}

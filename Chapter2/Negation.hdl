@@ -1,0 +1,18 @@
+// John Burk Merryman
+// 126008357
+
+//Negation.hdl
+
+/**
+ * Negate a 16-bit number, be aware that first bit is the sign-bit. 
+ * 2’s complement of the input 
+ */
+
+CHIP Negation {
+    IN in[16];
+    OUT out[16];
+
+    PARTS:
+	Not16(in=in,out=c1);
+	Inc16(in=c1,out=out);
+}
