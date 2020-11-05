@@ -1,0 +1,17 @@
+// John Burk Merryman
+// 126008357
+
+/**
+ * Bit:
+ * If load(t-1) then out(t)=in(t-1)
+ * else out(t)=out(t-1)
+ */
+
+CHIP Bit {
+	IN in, load;
+	OUT out;
+	
+	PARTS:
+	Mux(a=o-hold, b=in, sel=load, out=o-mux);
+	DFF(in=o-mux, out=out, out=o-hold);
+}
